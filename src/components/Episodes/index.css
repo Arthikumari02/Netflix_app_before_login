@@ -1,0 +1,34 @@
+.episode-list {
+  padding: 20px;
+  background-color: #0f0f0f;
+  color: white;
+}
+
+.episode-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.episode-card {
+  background: #1c1c1c;
+  padding: 16px;
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+}
+
+.episode-card:hover {
+  transform: scale(1.02);
+}
+
+.episode-code {
+  color: #aaa;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.characters {
+  font-size: 13px;
+  color: #ccc;
+  margin-top: 8px;
+}
