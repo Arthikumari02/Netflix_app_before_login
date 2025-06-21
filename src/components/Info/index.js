@@ -2,11 +2,10 @@ import React from 'react';
 
 const ShowInfo = ({ showData }) => {
   return (
-    <div className="bg-[#383735] backdrop-blur-md rounded-xl p-8 flex justify-between items-start text-white w-full max-w-6xl mx-auto mb-10 mt-[4%]">
-      
+    <div className="bg-neutral-800/80 border-2 border-neutral-500 rounded-xl p-8 flex justify-between items-start text-white max-w-6xl mb-10 mt-[4%] mx-[13%]">
       <div className="flex-1 pr-6">
         <h2 className="text-2xl font-bold mb-2">{showData.title}</h2>
-        <div className="flex items-center space-x-4 text-sm text-gray-300 mb-2">
+        <div className="flex items-center space-x-4 text-sm text-white/70 mb-2">
           <span>{showData.year}</span>
           <span>•</span>
           <span>{showData.rating}</span>

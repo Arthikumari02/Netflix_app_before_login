@@ -16,6 +16,7 @@ export const GET_EPISODES = gql`
 export const GET_EPISODE_DETAILS = gql`
   query GetEpisode($id: ID!) {
     episode(id: $id) {
+      id
       name
       air_date
       episode
@@ -24,7 +25,11 @@ export const GET_EPISODE_DETAILS = gql`
         name
         image
         gender
+        status
         origin {
+          name
+        }
+        location{
           name
         }
       }
@@ -32,25 +37,17 @@ export const GET_EPISODE_DETAILS = gql`
   }
 `
 
-export const LOCATIONS = gql`
-  query GetLocations($id: ID) {
-    location(id: $id) {
-      residents {
-        id
-        name
-        episode
-        created
-        gender
-        image
-        origin
-        species
-        status
-        type
-      }
-      created
-      dimension
+export const UPDATE_EPISODE = gql`
+  mutation UpdateEpisode($id: ID!, $input: EpisodeUpdateInput!) {
+    updateEpisode(id: $id, input: $input) {
       id
-      name
+      title
+      genres
+      description
+      audio
+      subtitles
+      tags
+      rating
     }
   }
 `

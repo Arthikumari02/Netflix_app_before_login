@@ -1,50 +1,71 @@
-import React from 'react';
-import { useQuery } from '@apollo/client';
-import { GET_EPISODE_DETAILS } from '../../graphql/queries';
+import React, { useEffect, useState } from 'react';
+import { useQuery, useMutation } from '@apollo/client';
+import { GET_EPISODE_DETAILS, UPDATE_EPISODE } from '../../graphql/queries';
 import { Play, Volume2, RotateCcw, Maximize2 } from 'lucide-react';
 import ShowInfo from '../Info';
 import MoreDetails from '../MoreDetails';
 
 const VideoDetails = ({ episodeId }) => {
-  const { data, loading, error } = useQuery(GET_EPISODE_DETAILS, {
+  const { data, error } = useQuery(GET_EPISODE_DETAILS, {
     variables: { id: episodeId },
     skip: !episodeId,
   });
 
-  if (loading) return <p>Loading episode...</p>;
+  const [updateEpisode] = useMutation(UPDATE_EPISODE);
+
+  const [episodeMeta, setEpisodeMeta] = useState({
+    title: '',
+    genres: '',
+    description: '',
+    audio: '',
+    subtitles: '',
+    tags: '',
+    rating: '',
+  });
+
+ useEffect(() => {
+  if (!data?.episode?.id) return;
+
+  const customMeta = {
+    title: "Rick and Morty",
+    genres: "Sci-Fi, Animation",
+    description: "The Homicide Intervention Team (HIT)...",
+    audio: "English",
+    subtitles: "English",
+    tags: "Dark Humor • Surreal • Adult",
+    rating: "A",
+  };
+
+  setEpisodeMeta(customMeta);
+}, [data?.episode?.id, updateEpisode]);
+
+
   if (error) return <p>Error loading episode</p>;
 
-  const showData = {
-    title: data?.episode?.name ?? 'Loading...',
-    description: data?.episode?.air_date ?? '',
-    characters: data?.episode?.characters ?? [],
-  };
-
-  const showDetails = {
-    genres: 'Sci-Fi, Animation',
-    tags: 'Dark Humor • Surreal • Adult',
-    audio: 'English',
-    subtitles: 'English',
-    cast: data?.episode?.characters?.slice(0, 3).map(c => c.name).join(', ') || '',
-  };
-
-  const showInfo = {
-  title: data?.episode?.name ?? 'Loading...',
-  description: 'The Homicide Intervention Team (HIT) sends ruthless police officer Arjun Sarkaar to find a group of killers and stop their grisly murder spree.',
+const showInfo = {
+  title: episodeMeta.title || data?.episode?.name || 'Loading...',
+  description: episodeMeta.description || data?.episode?.air_date || 'N/A',
   year: new Date(data?.episode?.air_date).getFullYear().toString(),
-  rating: 'A',
-  genre: 'Thriller',
-  starring: data?.episode?.characters?.slice(0, 3).map(c => c.name).join(', ') || '',
+  rating: episodeMeta.rating || 'N/A',
+  genre: episodeMeta.genres || 'N/A',
+  starring: data?.episode?.characters?.slice(0, 3).map(c => c.name).join(', ') || 'N/A',
+};
+
+const showDetails = {
+  genres: episodeMeta.genres || 'N/A',
+  tags: episodeMeta.tags || 'N/A',
+  audio: episodeMeta.audio || 'N/A',
+  subtitles: episodeMeta.subtitles || 'N/A',
+  cast: data?.episode?.characters?.slice(0, 3).map(c => c.name).join(', ') || 'N/A',
 };
 
 
   return (
     <div className="text-white">
-      {/* Background banner (optional image or color) */}
-      <div className="relative h-[60vh] bg-gradient-to-r from-black via-gray-900 to-black flex items-center">
+      <div className="relative h-[60vh] bg-gradient-to-r from-black via-gray-900 to-black flex items-center mx-[5%]">
         <div className="container mx-auto px-12">
           <h1 className="text-5xl font-extrabold mb-4 text-green-400" style={{ fontFamily: 'Comic Sans MS, cursive' }}>
-            {showData.title}
+            {showInfo.title}
           </h1>
 
           <input
@@ -58,7 +79,6 @@ const VideoDetails = ({ episodeId }) => {
           <p className="text-gray-400 text-sm mt-2">Endless entertainment starting at ₹149</p>
         </div>
 
-        {/* Action Icons */}
         <div className="absolute bottom-8 right-12 flex space-x-3">
           {[Play, Volume2, RotateCcw, Maximize2].map((Icon, i) => (
             <button
@@ -71,13 +91,10 @@ const VideoDetails = ({ episodeId }) => {
         </div>
       </div>
 
-      <dvi>
-        <ShowInfo showData={showInfo} />
-      </dvi>
+      <ShowInfo showData={showInfo} />
 
-      {/* More Details */}
-      <div className="mx-[15%] my-[3%]">
-        <h1 className='text-4xl'>More Details</h1>
+      <div className="mx-[10%] my-[3%]">
+        <h1 className='text-3xl font-bold text-white'>More Details</h1>
         <MoreDetails showDetails={showDetails} />
       </div>
     </div>
