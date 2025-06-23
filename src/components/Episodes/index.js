@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const EpisodeCarousel = ({ seasonsData, onEpisodeClick  }) => {
@@ -18,12 +18,21 @@ const EpisodeCarousel = ({ seasonsData, onEpisodeClick  }) => {
     }
   };
 
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.scrollTo({
+        left: 0,
+        behavior: 'smooth',
+      });
+    }
+  }, [selectedSeason]);
+
   return (
     <div className="space-y-6 px-[10%]">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-left items-center gap-5">
         <h2 className="text-3xl font-bold text-white">Episodes</h2>
         <select
-          className="bg-gray-800 text-white px-4 py-2 rounded"
+          className="bg-gray-800 text-white px-4 py-2 rounded-full pr-2"
           value={selectedSeason}
           onChange={(e) => setSelectedSeason(Number(e.target.value))}
         >

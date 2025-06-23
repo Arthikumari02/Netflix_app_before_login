@@ -1,24 +1,33 @@
-import React from 'react';
-
 const ShowInfo = ({ showData }) => {
   return (
-    <div className="bg-neutral-800/80 border-2 border-neutral-500 rounded-xl p-8 flex justify-between items-start text-white max-w-6xl mb-10 mt-[4%] mx-[13%]">
-      <div className="flex-1 pr-6">
-        <h2 className="text-2xl font-bold mb-2">{showData.title}</h2>
-        <div className="flex items-center space-x-4 text-sm text-white/70 mb-2">
+    <div className="bg-neutral-800/80 border border-neutral-600 rounded-2xl px-8 py-6 flex justify-between text-white max-w-6xl mx-auto mt-10 mb-12">
+
+      <div className="w-2/3 pr-6">
+        <h2 className="text-2xl font-bold mb-1">{showData.title}</h2>
+
+        <div className="flex items-center gap-3 text-sm text-white mb-3">
           <span>{showData.year}</span>
+          <span>•</span>
+          <span>{showData.seasons} Seasons</span>
           <span>•</span>
           <span>{showData.rating}</span>
           <span>•</span>
-          <span>{showData.genre}</span>
+          <span className="capitalize">{showData.genre}</span>
         </div>
-        <p className="text-gray-300 text-sm leading-relaxed">{showData.description}</p>
+
+        <p className="text-sm font-bold text-white leading-relaxed">
+          {showData.description}
+        </p>
       </div>
 
-      <div className="border-l border-gray-700 pl-6 w-1/3">
-        <p className="text-sm text-gray-300">
-          <span className="text-white font-semibold">Starring: </span>
+      <div className="w-1/3 pl-6 flex flex-col justity-center items-left self-center border-l border-neutral-500 text-sm text-white space-y-2">
+        <p>
+          <span className="text-white font-bold">Starring: </span>
           {showData.starring}
+        </p>
+        <p>
+          <span className="text-white font-bold">Creators: </span>
+          {showData.creators}
         </p>
       </div>
     </div>

@@ -10,7 +10,7 @@ const NetflixTabs = ({ tabs, activeTab, setActiveTab }) => {
             onClick={() => setActiveTab(tab)}
             className={`px-4 py-1.5 text-sm font-medium rounded-full transition-colors duration-200 ${
               activeTab === tab
-                ? 'bg-white text-black'
+                ? 'text-white'
                 : 'text-white/70 hover:text-white'
             }`}
           >

@@ -6,7 +6,7 @@ const plans = [
     quality: '480p',
     description: ['Fair video quality', 'For your phone or tablet'],
     price: '₹149 /mo',
-    bg: 'bg-gradient-to-b from-blue-900 to-black',
+    bg: 'bg-gradient-to-br from-blue-900 to-black',
   },
   {
     name: 'Basic',
@@ -14,26 +14,31 @@ const plans = [
     description: ['Good video quality', 'For your phone, tablet, laptop and TV'],
     price: '₹199 /mo',
     badge: 'Most Popular',
-    bg: 'bg-gradient-to-b from-blue-800 to-black',
+    bg: 'bg-gradient-to-br from-blue-800 to-black',
   },
   {
     name: 'Standard',
     quality: '1080p',
     description: ['Great video quality', 'For your phone, tablet, laptop and TV'],
     price: '₹499 /mo',
-    bg: 'bg-gradient-to-b from-purple-800 to-black',
+    bg: 'bg-gradient-to-br from-purple-800 to-black',
   },
   {
     name: 'Premium',
     quality: '4K + HDR',
     description: ['Best video quality', 'Immersive sound (spatial audio)', 'For your phone, tablet, laptop and TV'],
     price: '₹649 /mo',
-    bg: 'bg-gradient-to-b from-pink-800 to-black',
+    bg: 'bg-gradient-to-br from-pink-800 to-black',
   },
 ]
 
 const PlanCard = ({ name, quality, description, price, badge, bg }) => (
-  <div className={`rounded-xl p-6 text-white w-[23%] ${bg} cursor-pointer hover:scale-105 transition-transform duration-300`}>
+  <div className={` flex flex-col justify-left rounded-xl p-6 text-white w-[24%] h-[260px] md:h-[220px] ${bg} cursor-pointer hover:scale-105 transition-transform duration-300`}>
+    {badge && (
+      <div className="self-end w-[30%] -mt-5 -mr-5  bg-gray-300 text-black text-xs px-2 py-1 rounded-bl-lg rounded-tr-lg">
+        {badge}
+      </div>
+    )}
     <h3 className="text-xl font-semibold">{name}</h3>
     <p className="text-sm opacity-80 mb-4">{quality}</p>
     <ul className="mb-6 space-y-2 text-sm">
@@ -44,18 +49,13 @@ const PlanCard = ({ name, quality, description, price, badge, bg }) => (
       ))}
     </ul>
     <p className="text-lg font-semibold">{price}</p>
-    {badge && (
-      <div className="relative top-2 right-2 bg-gray-200 text-black text-xs px-2 py-1 rounded">
-        {badge}
-      </div>
-    )}
   </div>
 )
 
 const PricingPlans = () => (
   <div className="py-1 px-6 text-left text-white mx-[10%]">
     <h2 className="text-3xl font-bold mb-10">A plan to suit your needs</h2>
-    <div className="flex justify-center gap-3 flex-wrap">
+    <div className="flex justify-between flex-wrap">
       {plans.map((plan, idx) => (
         <PlanCard key={idx} {...plan} />
       ))}

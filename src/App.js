@@ -1,4 +1,5 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState ,useMemo } from 'react';
+import { observer } from 'mobx-react-lite';
 import { useQuery } from '@apollo/client';
 import { GET_EPISODES } from './graphql/queries';
 import Header from './components/Header';
@@ -6,9 +7,10 @@ import NetflixTabs from './components/Tabs';
 import VideoDetails from './components/VideoDetails';
 import NetflixEpisodes from './components/Episodes';
 import EpisodeModal from './components/Episodes/EpisodeModel';
-import HorizontalCarousel from './components/HorizontalItems';
+import MoreToWatch from './components/MoreToWatch';
 import PricingPlans from './components/Plans';
 import FooterWithJoinButton from './components/Footer';
+import { episodeStore } from './stores/EpisodeStore';
 import './App.css';
 
 const trendingList = [
@@ -52,18 +54,50 @@ const App = () => {
   });
 
   const [activeTab, setActiveTab] = useState('Episodes');
-  const [selectedEpisodeId, setSelectedEpisodeId] = useState(1);
 
   const episodesRef = useRef(null);
   const trailersRef = useRef(null);
   const moreRef = useRef(null);
   const plansRef = useRef(null);
 
-  const tabs = ['Trailers', 'Episodes', 'More to Watch', 'Plans'];
+  const groupedBySeason = useMemo(() => {
+    if (!data?.episodes?.results) return [];
+
+    const groupedBySeasonObj = {};
+
+    data.episodes.results.forEach((ep) => {
+      const seasonNum = parseInt(ep.episode.slice(1, 3));
+      if (!groupedBySeasonObj[seasonNum]) {
+        groupedBySeasonObj[seasonNum] = [];
+      }
+
+      groupedBySeasonObj[seasonNum].push(ep);
+    });
+
+    return Object.entries(groupedBySeasonObj).map(([season, episodes]) => ({
+      season: Number(season),
+      episodes: episodes.map((ep) => {
+        const randomCharacter =
+          ep.characters && ep.characters.length > 0
+            ? ep.characters[Math.floor(Number(ep.id) % ep.characters.length)]
+            : null;
+
+        return {
+          id: ep.id,
+          title: ep.name,
+          description:
+            'Aliens send Rick, Morty and Jerry into an alternate reality...',
+          thumbnail: randomCharacter?.image || '',
+        };
+      }),
+    }));
+  }, [data]);
 
   if (loading) return <p>Loading episodes...</p>;
   if (error) return <p>Error loading episodes</p>;
 
+
+  const tabs = ['Trailers', 'Episodes', 'More to Watch', 'Plans'];
 
   const handleTabClick = (tab) => {
   setActiveTab(tab);
@@ -91,18 +125,6 @@ data.episodes.results.forEach((ep) => {
   groupedBySeasonObj[seasonNum].push(ep)
 })
 
-const groupedBySeason = Object.entries(groupedBySeasonObj).map(
-  ([season, episodes]) => ({
-    season: Number(season),
-    episodes: episodes.map((ep, index) => ({
-      id: ep.id,
-      title: ep.name,
-      description: "Aliens send Rick, Morty and Jerry into an alternate reality. Rick tries to get them out while Jerry pitches a marketing slogan for apples.",
-      thumbnail: ep.characters?.[0]?.image || '',
-    })),
-  })
-)
-
 const recommendedList = data.episodes.results
   .filter((ep, index) => index < 6)
   .map(ep => ({
@@ -119,23 +141,23 @@ const recommendedList = data.episodes.results
         activeTab={activeTab} 
         setActiveTab={handleTabClick}
       />
-      <VideoDetails episodeId={selectedEpisodeId} />
+      <VideoDetails episodeId={episodeStore.selectedEpisodeId} />
      <div className="px-8 pb-5 mt-10">
         <div ref={episodesRef} className="my-section">
           <NetflixEpisodes seasonsData={groupedBySeason}   
-            onEpisodeClick={setSelectedEpisodeId}
+            onEpisodeClick={(id) => episodeStore.setSelectedEpisodeId(id)}
           />
-          {selectedEpisodeId && (
+         {episodeStore.modalEpisodeId && (
             <EpisodeModal
-              episodeId={selectedEpisodeId}
-              onClose={() => setSelectedEpisodeId(null)}
+              episodeId={episodeStore.modalEpisodeId}
+              onClose={() => episodeStore.closeModal()}
             />
           )}
         </div>
 
         <div ref={moreRef} className="my-section mt-12">
-          <HorizontalCarousel id="you-might-like" title="You Might Also Like" items={recommendedList} />
-          <HorizontalCarousel title="Trending Now" items={trendingList} />
+          <MoreToWatch title="You Might Also Like" items={recommendedList} />
+          <MoreToWatch title="Trending Now" items={trendingList} />
         </div>
 
         <div ref={plansRef} className="my-section mt-1">
@@ -147,4 +169,4 @@ const recommendedList = data.episodes.results
   );
 };
 
-export default App;
+export default observer(App);

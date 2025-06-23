@@ -1,4 +1,3 @@
-import React, { useEffect, useRef, useState } from 'react'
 import LanguageSelector from '../language'
 
 const footerLinks = [
@@ -9,35 +8,30 @@ const footerLinks = [
 ]
 
 const FooterWithJoinButton = () => {
-  const likeRef = useRef(null)
-  const [showJoinButton, setShowJoinButton] = useState(false)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => setShowJoinButton(entry.isIntersecting),
-      { threshold: 0.5 }
-    )
-    if (likeRef.current) observer.observe(likeRef.current)
-    return () => observer.disconnect()
-  }, [])
 
   return (
     <>
-    <div className="my-1 flex flex-col items-center justify-center mb-20">
-        <div className="flex justify-between bg-gradient-to-r from-black/70 to-black/90 text-white rounded-2xl px-6 py-6 text-center w-full max-w-4xl">
-            <h2 className="text-xl font-bold">
+      <div className="my-1 flex flex-col items-center justify-center mb-20">
+        <div className="flex justify-between text-white rounded-2xl px-6 py-6 text-center w-full max-w-[75%]"  style={{
+             backgroundImage: `url("https://res.cloudinary.com/dft7fsze1/image/upload/v1747378748/nvgizh6wnob8vcvynvrz.png")`,
+            }}>
+          <h2 className="text-xl font-bold">
             Discover your next favourites, plus new releases every week
-            </h2>
-            <a href="https://www.netflix.com/in/" target="_blank" rel="noopener noreferrer" className='relative top-2 right-2 bg-transprent text-white text-xs border-2 border-white px-2 py-1 rounded'>
-                More About Netflix
-            </a>
+          </h2>
+          <a
+            href="https://www.netflix.com/in/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="relative top-2 right-2 bg-transparent text-white text-xs border-2 border-white px-2 py-1 rounded"
+          >
+            More About Netflix
+          </a>
         </div>
-        {showJoinButton && (
-            <button className="w-[15%] mt-4 bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-6 rounded-full">
+          <button className="w-[15%] mt-4 bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-6 rounded-full">
             Join now
-            </button>
-        )}
-    </div>
+          </button>
+        
+      </div>
     
       <footer className="bg-black text-white px-3 py-12 text-sm">
         <div className="max-w-6xl mx-[10%]">
@@ -55,13 +49,12 @@ const FooterWithJoinButton = () => {
                    <a href="/#" className="underline">
                     {link}
                     </a>
-
                   </li>
                 ))}
               </ul>
             ))}
           </div>
-            < LanguageSelector/>
+            <LanguageSelector/>
           <p className="mb-2">Netflix India</p>
           <p className="text-xs text-white/50">
             This page is protected by Google reCAPTCHA to ensure you're not a bot.{' '}

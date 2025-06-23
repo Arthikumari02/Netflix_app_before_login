@@ -26,7 +26,7 @@ const HorizontalCarousel = ({ title, items, sectionRef }) => {
 
         <div
           ref={containerRef}
-          className="overflow-x-auto no-scrollbar flex gap-4 pb-2 mx-[4%]"
+          className="overflow-x-auto no-scrollbar flex gap-4 pb-2 mx-[2%]"
         >
           {items.map((item, idx) => (
             <div
