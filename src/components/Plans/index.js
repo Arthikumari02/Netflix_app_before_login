@@ -1,5 +1,3 @@
-import React from 'react'
-
 const plans = [
   {
     name: 'Mobile',
@@ -33,7 +31,7 @@ const plans = [
 ]
 
 const PlanCard = ({ name, quality, description, price, badge, bg }) => (
-  <div className={` flex flex-col justify-left rounded-xl p-6 text-white w-[24%] h-[260px] md:h-[220px] ${bg} cursor-pointer hover:scale-105 transition-transform duration-300`}>
+  <div className={` flex flex-col justify-left rounded-xl p-6 text-white w-[24%] h-[260px] md:h-[260px] ${bg} cursor-pointer hover:scale-105 transition-transform duration-300`}>
     {badge && (
       <div className="self-end w-[30%] -mt-5 -mr-5  bg-gray-300 text-black text-xs px-2 py-1 rounded-bl-lg rounded-tr-lg">
         {badge}
@@ -53,8 +51,8 @@ const PlanCard = ({ name, quality, description, price, badge, bg }) => (
 )
 
 const PricingPlans = () => (
-  <div className="py-1 px-6 text-left text-white mx-[10%]">
-    <h2 className="text-3xl font-bold mb-10">A plan to suit your needs</h2>
+  <div className="py-1 px-6 text-left text-white mx-[8%]">
+    <h2 className="text-3xl font-bold mb-5">A plan to suit your needs</h2>
     <div className="flex justify-between flex-wrap">
       {plans.map((plan, idx) => (
         <PlanCard key={idx} {...plan} />

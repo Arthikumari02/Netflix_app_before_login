@@ -3,9 +3,9 @@ import { observer } from 'mobx-react-lite';
 import { useQuery } from '@apollo/client';
 import { GET_EPISODES } from './graphql/queries';
 import Header from './components/Header';
-import NetflixTabs from './components/Tabs';
+import Tabs from './components/Tabs';
 import VideoDetails from './components/VideoDetails';
-import NetflixEpisodes from './components/Episodes';
+import Episode from './components/Episodes';
 import EpisodeModal from './components/Episodes/EpisodeModel';
 import MoreToWatch from './components/MoreToWatch';
 import PricingPlans from './components/Plans';
@@ -53,10 +53,9 @@ const App = () => {
     variables: { page: 1 },
   });
 
-  const [activeTab, setActiveTab] = useState('Episodes');
+  const [activeTab, setActiveTab] = useState('');
 
   const episodesRef = useRef(null);
-  const trailersRef = useRef(null);
   const moreRef = useRef(null);
   const plansRef = useRef(null);
 
@@ -97,7 +96,7 @@ const App = () => {
   if (error) return <p>Error loading episodes</p>;
 
 
-  const tabs = ['Trailers', 'Episodes', 'More to Watch', 'Plans'];
+  const tabs = ['Episodes', 'More to Watch', 'Plans'];
 
   const handleTabClick = (tab) => {
   setActiveTab(tab);
@@ -105,7 +104,6 @@ const App = () => {
   setTimeout(() => {
     const sectionMap = {
       Episodes: episodesRef,
-      Trailers: trailersRef,
       'More to Watch': moreRef,
       Plans: plansRef,
     };
@@ -113,17 +111,6 @@ const App = () => {
     sectionMap[tab]?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, 50);
 };
-
-const groupedBySeasonObj = {}
-
-data.episodes.results.forEach((ep) => {
-  const seasonNum = parseInt(ep.episode.slice(1, 3)) 
-  if (!groupedBySeasonObj[seasonNum]) {
-    groupedBySeasonObj[seasonNum] = []
-  }
-
-  groupedBySeasonObj[seasonNum].push(ep)
-})
 
 const recommendedList = data.episodes.results
   .filter((ep, index) => index < 6)
@@ -136,7 +123,7 @@ const recommendedList = data.episodes.results
   return (
     <div className="App relative min-h-screen text-white">
       <Header />
-      <NetflixTabs 
+      <Tabs 
         tabs={tabs} 
         activeTab={activeTab} 
         setActiveTab={handleTabClick}
@@ -144,7 +131,7 @@ const recommendedList = data.episodes.results
       <VideoDetails episodeId={episodeStore.selectedEpisodeId} />
      <div className="px-8 pb-5 mt-10">
         <div ref={episodesRef} className="my-section">
-          <NetflixEpisodes seasonsData={groupedBySeason}   
+          <Episode seasonsData={groupedBySeason}   
             onEpisodeClick={(id) => episodeStore.setSelectedEpisodeId(id)}
           />
          {episodeStore.modalEpisodeId && (

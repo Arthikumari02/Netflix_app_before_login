@@ -14,7 +14,7 @@ const HorizontalCarousel = ({ title, items, sectionRef }) => {
   };
 
   return (
-    <div ref={sectionRef} className="space-y-4 px-6 mb-8 mx-[10%]">
+    <div ref={sectionRef} className="space-y-4 px-6 mb-8 mx-[8%]">
       <h2 className="text-3xl font-bold text-white">{title}</h2>
       <div className="relative">
         <button

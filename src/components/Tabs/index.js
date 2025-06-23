@@ -1,6 +1,5 @@
-import React from 'react';
 
-const NetflixTabs = ({ tabs, activeTab, setActiveTab }) => {
+const Tabs = ({ tabs, activeTab, setActiveTab }) => {
   return (
     <div className="mt-20 mb-5 flex justify-center">
       <div className="flex bg-black/80 backdrop-blur-md rounded-full px-3 py-1 space-x-2 shadow-lg">
@@ -22,4 +21,4 @@ const NetflixTabs = ({ tabs, activeTab, setActiveTab }) => {
   );
 };
 
-export default NetflixTabs;
+export default Tabs;

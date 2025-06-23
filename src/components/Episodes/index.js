@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-const EpisodeCarousel = ({ seasonsData, onEpisodeClick  }) => {
+const Episode = ({ seasonsData, onEpisodeClick  }) => {
   const [selectedSeason, setSelectedSeason] = useState(seasonsData[0].season);
   const containerRef = useRef(null);
 
@@ -28,7 +28,7 @@ const EpisodeCarousel = ({ seasonsData, onEpisodeClick  }) => {
   }, [selectedSeason]);
 
   return (
-    <div className="space-y-6 px-[10%]">
+    <div className="space-y-6 px-[9%]">
       <div className="flex justify-left items-center gap-5">
         <h2 className="text-3xl font-bold text-white">Episodes</h2>
         <select
@@ -75,4 +75,4 @@ const EpisodeCarousel = ({ seasonsData, onEpisodeClick  }) => {
   );
 };
 
-export default EpisodeCarousel;
+export default Episode;

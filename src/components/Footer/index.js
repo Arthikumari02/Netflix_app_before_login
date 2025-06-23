@@ -12,7 +12,7 @@ const FooterWithJoinButton = () => {
   return (
     <>
       <div className="my-1 flex flex-col items-center justify-center mb-20">
-        <div className="flex justify-between text-white rounded-2xl px-6 py-6 text-center w-full max-w-[75%]"  style={{
+        <div className="flex justify-between text-white rounded-2xl px-6 py-6 text-center w-full max-w-[80%]"  style={{
              backgroundImage: `url("https://res.cloudinary.com/dft7fsze1/image/upload/v1747378748/nvgizh6wnob8vcvynvrz.png")`,
             }}>
           <h2 className="text-xl font-bold">

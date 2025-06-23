@@ -1,11 +1,11 @@
 const ShowInfo = ({ showData }) => {
   return (
-    <div className="bg-neutral-800/80 border border-neutral-600 rounded-2xl px-8 py-6 flex justify-between text-white max-w-6xl mx-auto mt-10 mb-12">
+    <div className="bg-neutral-800/80 border border-neutral-600 rounded-2xl px-8 py-6 flex justify-between text-white  mx-[8%] mt-10 mb-12">
 
       <div className="w-2/3 pr-6">
         <h2 className="text-2xl font-bold mb-1">{showData.title}</h2>
 
-        <div className="flex items-center gap-3 text-sm text-white mb-3">
+        <div className="flex items-center gap-3 text-sm text-white font-semibold my-3">
           <span>{showData.year}</span>
           <span>•</span>
           <span>{showData.seasons} Seasons</span>
@@ -15,7 +15,7 @@ const ShowInfo = ({ showData }) => {
           <span className="capitalize">{showData.genre}</span>
         </div>
 
-        <p className="text-sm font-bold text-white leading-relaxed">
+        <p className="text-base font-semibold text-white leading-relaxed">
           {showData.description}
         </p>
       </div>
