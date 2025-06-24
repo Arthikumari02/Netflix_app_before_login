@@ -129,8 +129,8 @@ const recommendedList = data.episodes.results
         setActiveTab={handleTabClick}
       />
       <VideoDetails episodeId={episodeStore.selectedEpisodeId} />
-     <div className="px-8 pb-5 mt-10">
-        <div ref={episodesRef} className="my-section">
+     <div className="md:px-8 md:pb-3 mt-10">
+        <div ref={episodesRef} className="md:mx-[8%]">
           <Episode seasonsData={groupedBySeason}   
             onEpisodeClick={(id) => episodeStore.setSelectedEpisodeId(id)}
           />
@@ -142,12 +142,12 @@ const recommendedList = data.episodes.results
           )}
         </div>
 
-        <div ref={moreRef} className="my-section mt-12">
+        <div ref={moreRef} className="md:mx-[7%] mt-12">
           <MoreToWatch title="You Might Also Like" items={recommendedList} />
           <MoreToWatch title="Trending Now" items={trendingList} />
         </div>
 
-        <div ref={plansRef} className="my-section mt-1">
+        <div ref={plansRef} className="md:mx-[7%] mt-1">
           <PricingPlans id="plans" />
         </div>
       </div>

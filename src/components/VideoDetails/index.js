@@ -105,7 +105,7 @@ const showDetails = {
 
       <ShowInfo showData={showInfo} />
 
-      <div className="mx-[8%] my-[3%]">
+      <div className="mx-[3%] md:mx-[8%] my-[3%]">
         <h1 className='text-3xl font-bold text-white mb-2'>More Details</h1>
         <MoreDetails showDetails={showDetails} />
       </div>

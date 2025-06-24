@@ -14,8 +14,8 @@ const HorizontalCarousel = ({ title, items, sectionRef }) => {
   };
 
   return (
-    <div ref={sectionRef} className="space-y-4 px-6 mb-8 mx-[8%]">
-      <h2 className="text-3xl font-bold text-white">{title}</h2>
+    <div ref={sectionRef} className="space-y-4 px-6 mb-8 mx-[2%] md:mx-[0]">
+      <h2 className="text-2xl md:text-3xl font-bold text-white">{title}</h2>
       <div className="relative">
         <button
           onClick={() => scroll('left')}
