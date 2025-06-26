@@ -23,21 +23,35 @@ const VideoDetails = ({ episodeId }) => {
     rating: '',
   });
 
- useEffect(() => {
-  if (!data?.episode?.id) return;
+  useEffect(() => {
+    if (!data?.episode?.id) return;
 
-  const customMeta = {
-    title: "Rick and Morty",
-    genres: "Sci-Fi, Animation",
-    description: "Brilliant scientist Rick takes his fretful teenage grandson, Morty, on wild misadventures in other worlds and alternate dimensions.",
-    audio: "English",
-    subtitles: "English",
-    tags: "Dark Humor • Surreal • Adult",
-    rating: "A",
-  };
+    const customMeta = {
+      title: "Rick and Morty",
+      genres: "Sci-Fi, Animation",
+      description:
+        "Brilliant scientist Rick takes his fretful teenage grandson, Morty, on wild misadventures in other worlds and alternate dimensions.",
+      audio: "English",
+      subtitles: "English",
+      tags: "Dark Humor • Surreal • Adult",
+      rating: "A",
+    };
 
-  setEpisodeData(customMeta);
-}, [data?.episode?.id, updateEpisode]);
+    setEpisodeData(customMeta);
+
+    updateEpisode({
+      variables: {
+        id: data.episode.id,
+        input: customMeta,
+      },
+    })
+    .then((res) => {
+      console.log("✅ Update successful:", res.data);
+    }).catch((err) => {
+      console.error("❌ Mutation failed:", err.message);  
+    });
+  }, [data?.episode?.id, updateEpisode]);
+
 
 
   if (error) return <p>Error loading episode</p>;
